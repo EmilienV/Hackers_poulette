@@ -1,0 +1,30 @@
+{
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "vscode_home",
+      "database": "testt",
+      "username": "Dbconnect",
+      "password": "password"
+    },
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "vscode_hackers_poulette",
+      "database": "hackers_poulette",
+      "username": "Evolkaert",
+      "password": "E6adn019_"
+    }
+  ]
+}

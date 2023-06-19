@@ -15,14 +15,43 @@
 $dbh = new PDO('mysql:host=localhost;dbname=hackers_poulette', "Evolkaert","E6adn019_");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+// Sanitize the inputs
   $sanitizedName = filter_var($_POST['name'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $sanitizedFirstname = filter_var($_POST['firstname'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
   $sanitizedEmail = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+  $sanitizedDescription = filter_var($_POST['description'], FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+  $fileContent = null;
+  if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+    $uploadedFile = $_FILES['file'];
+    $fileExtension = pathinfo($uploadedFile['name'], PATHINFO_EXTENSION);
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    $maxFileSize = 2 * 1024 * 1024; // 2MB
+
+    if (in_array(strtolower($fileExtension), $allowedExtensions) && $uploadedFile['size'] <= $maxFileSize) {
+
+      $fileContent = file_get_contents($uploadedFile['tmp_name']);
+    }
+  }
 
 
-  // header("Location: ".$_SERVER['PHP_SELF']);
-  // exit();
+  // Insert the data into the database
+  $stmt = $dbh->prepare("INSERT INTO form_data (name, firstname, email, description, file) VALUES (:name, :firstname, :email, :description, :file)");
+  $stmt->bindParam(':name', $sanitizedName);
+  $stmt->bindParam(':firstname', $sanitizedFirstname);
+  $stmt->bindParam(':email', $sanitizedEmail);
+  $stmt->bindParam(':description', $sanitizedDescription);
+  $stmt->bindParam(':file', $fileContent, PDO::PARAM_LOB);
+
+  if ($stmt->execute()) {
+
+  } else {
+
+  }
+
+  // Redirect to the same page to prevent refresh
+  header("Location: ".$_SERVER['PHP_SELF']);
+  exit();
 }
 ?>
 
@@ -31,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 <h1 id="title">Contact me</h1>
     <div class="form_container">
-    <form action="/submit-form" method="post">
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
   <div class="name_area">
     <label for="name">Name:</label>
     <input type="text" id="name" name="name" required minlength="2" maxlength="255">
