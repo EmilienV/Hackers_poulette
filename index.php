@@ -13,12 +13,13 @@
 </head>
 
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
+
+
 
 
 $dbh = new PDO('mysql:host=localhost;dbname=hackers_poulette', "Dbconnect", "password");
+$response = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // Sanitize the inputs
@@ -45,9 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $secretAPIkey = '6LeIoLImAAAAACESnT4uRUJzpKAHJ_Z831h-UKX0';
     $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secretAPIkey . '&response=' . $_POST['g-recaptcha-response']);
-    $response = json_decode($verifyResponse);
+    $responseAPI = json_decode($verifyResponse);
 
-    if ($response->success) {
+    if ($responseAPI->success) {
 
       // Insert the data into the database
       $stmt = $dbh->prepare("INSERT INTO form_data (name, firstname, email, description, file) VALUES (:name, :firstname, :email, :description, :file)");
@@ -57,19 +58,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt->bindParam(':description', $sanitizedDescription);
       $stmt->bindParam(':file', $fileContent, PDO::PARAM_LOB);
 
-
-      echo "KQDOQQDNKQLD";
       if ($stmt->execute()) {
-        echo "OK";
-      } else {
-        echo "Errorrrr.";
+        $response = "Your message has been sent, we'll reach out to you as soon as possible.";
       }
-
-
-      // Redirect to the same page to prevent refresh
-      header("Location: " . $_SERVER['PHP_SELF']);
-      exit();
+    } else {
+      $response = "CAPTCHA verification failed. Please try again.";
     }
+  } else {
+    $response = "Please fill out the CAPTCHA.";
   }
 }
 ?>
@@ -77,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <h1 id="title">Contact me</h1>
   <div class="form_container">
-    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+    <form action="" method="post">
       <div class="name_area">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required minlength="2" maxlength="255">
@@ -95,10 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       <div class="file_area">
         <label for="file">File (optional):</label>
-        <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png, .gif" size="2000000" value="">
+        <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png, .gif" size="2000000">
       </div>
-
-
 
       <div class="description_area">
         <label for="description">Description:</label>
@@ -108,8 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="g-recaptcha" data-sitekey="6LeIoLImAAAAAMf0LPL1QoadU0SIjjV5Von4UBh4"></div>
 
       <button type="submit" id="submit_btn">Submit</button>
+      <div id="response_msg"><?php echo $response; ?></div>
   </div>
   </form>
+
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
