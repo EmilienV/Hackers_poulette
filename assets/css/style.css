@@ -18,10 +18,21 @@ body .form_container {
 body .form_container #submit_btn {
   background-color: #ebf5ee;
 }
+body .form_container #description {
+  width: 202px;
+}
+body .form_container #submit_btn {
+  width: 150px;
+  height: 30px;
+  margin-top: 10px;
+}
 body .form_container label {
   margin-right: 5px;
 }
 body .form_container input {
-  width: -moz-fit-content;
   width: fit-content;
-}/*# sourceMappingURL=style.css.map */
+  margin-bottom: 5px;
+}
+body .form_container .description_area {
+  margin-bottom: 15px;
+}

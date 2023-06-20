@@ -19,11 +19,23 @@ body {
     #submit_btn {
       background-color: #ebf5ee;
     }
+    #description {
+      width: 202px;
+    }
+    #submit_btn {
+      width: 150px;
+      height: 30px;
+      margin-top: 10px;
+    }
     label {
       margin-right: 5px;
     }
     input {
       width: fit-content;
+      margin-bottom: 5px;
+    }
+    .description_area {
+      margin-bottom: 15px;
     }
   }
 }

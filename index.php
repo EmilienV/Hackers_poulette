@@ -35,6 +35,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 
 
+  // reCAPTCHA validation
+  if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
+
+    // Google secret API
+    $secretAPIkey = '6LfZ4AAVAAAAAF722GPGWyJ_lf1F2hMSWzPHmuYc';
+
+    // reCAPTCHA response verification
+    $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secretAPIkey . '&response=' . $_POST['g-recaptcha-response']);
+
+    // Decode JSON data
+    $response = json_decode($verifyResponse);
+
+    echo $response;
+  }
+
+
+
   // Insert the data into the database
   $stmt = $dbh->prepare("INSERT INTO form_data (name, firstname, email, description, file) VALUES (:name, :firstname, :email, :description, :file)");
   $stmt->bindParam(':name', $sanitizedName);
@@ -50,8 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   exit();
 }
 ?>
-
-
 
 <body>
   <h1 id="title">Contact me</h1>
@@ -84,11 +99,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <textarea id="description" name="description" required minlength="2" maxlength="1000"></textarea>
       </div>
 
-
+      <div class="g-recaptcha" data-sitekey="6LeIoLImAAAAAMf0LPL1QoadU0SIjjV5Von4UBh4"></div>
 
       <button type="submit" id="submit_btn">Submit</button>
   </div>
   </form>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
 </html>
