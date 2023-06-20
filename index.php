@@ -13,6 +13,11 @@
 </head>
 
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
 $dbh = new PDO('mysql:host=localhost;dbname=hackers_poulette', "Dbconnect", "password");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -38,33 +43,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // reCAPTCHA validation
   if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
 
-    // Google secret API
-    $secretAPIkey = '6LfZ4AAVAAAAAF722GPGWyJ_lf1F2hMSWzPHmuYc';
-
-    // reCAPTCHA response verification
+    $secretAPIkey = '6LeIoLImAAAAACESnT4uRUJzpKAHJ_Z831h-UKX0';
     $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secretAPIkey . '&response=' . $_POST['g-recaptcha-response']);
-
-    // Decode JSON data
     $response = json_decode($verifyResponse);
 
-    echo $response;
+    if ($response->success) {
+
+      // Insert the data into the database
+      $stmt = $dbh->prepare("INSERT INTO form_data (name, firstname, email, description, file) VALUES (:name, :firstname, :email, :description, :file)");
+      $stmt->bindParam(':name', $sanitizedName);
+      $stmt->bindParam(':firstname', $sanitizedFirstname);
+      $stmt->bindParam(':email', $sanitizedEmail);
+      $stmt->bindParam(':description', $sanitizedDescription);
+      $stmt->bindParam(':file', $fileContent, PDO::PARAM_LOB);
+
+
+      echo "KQDOQQDNKQLD";
+      if ($stmt->execute()) {
+        echo "OK";
+      } else {
+        echo "Errorrrr.";
+      }
+
+
+      // Redirect to the same page to prevent refresh
+      header("Location: " . $_SERVER['PHP_SELF']);
+      exit();
+    }
   }
-
-
-
-  // Insert the data into the database
-  $stmt = $dbh->prepare("INSERT INTO form_data (name, firstname, email, description, file) VALUES (:name, :firstname, :email, :description, :file)");
-  $stmt->bindParam(':name', $sanitizedName);
-  $stmt->bindParam(':firstname', $sanitizedFirstname);
-  $stmt->bindParam(':email', $sanitizedEmail);
-  $stmt->bindParam(':description', $sanitizedDescription);
-  $stmt->bindParam(':file', $fileContent, PDO::PARAM_LOB);
-
-
-
-  // Redirect to the same page to prevent refresh
-  header("Location: " . $_SERVER['PHP_SELF']);
-  exit();
 }
 ?>
 
