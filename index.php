@@ -15,9 +15,6 @@
 <?php
 
 
-
-
-
 $dbh = new PDO('mysql:host=localhost;dbname=hackers_poulette', "Dbconnect", "password");
 $response = "";
 
@@ -60,6 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       if ($stmt->execute()) {
         $response = "Your message has been sent, we'll reach out to you as soon as possible.";
+
       }
     } else {
       $response = "CAPTCHA verification failed. Please try again.";
