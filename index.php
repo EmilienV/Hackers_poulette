@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets\css\style.css">
-  <!-- <script defer src="assets/validation.js"></script> -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
@@ -13,8 +12,6 @@
 </head>
 
 <?php
-
-
 $dbh = new PDO('mysql:host=localhost;dbname=id20944250_hackerspoulette', "id20944250_dbconnect", "E6adn019_");
 $response = "";
 
@@ -81,30 +78,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <h1 id="title">Contact me</h1>
   <div class="form_container">
-    <form action="" method="post">
+    <form action="" method="post" id="myForm">
       <div class="name_area">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required minlength="2" maxlength="255">
+        <input type="text" id="name" name="name">
       </div>
 
       <div class="firstname_area">
         <label for="firstname">First Name:</label>
-        <input type="text" id="firstname" name="firstname" required minlength="2" maxlength="255">
+        <input type="text" id="firstname" name="firstname">
       </div>
 
       <div class="email_area">
         <label for="email">Email Address:</label>
-        <input type="email" id="email" name="email" required minlength="2" maxlength="255">
+        <input type="email" id="email" name="email">
       </div>
 
       <div class="file_area">
         <label for="file">File (optional):</label>
-        <input type="file" id="file" name="file" accept=".jpg, .jpeg, .png, .gif" size="2000000">
+        <input type="file" id="file" name="file">
       </div>
 
       <div class="description_area">
         <label for="description">Description:</label>
-        <textarea id="description" name="description" required minlength="2" maxlength="1000"></textarea>
+        <textarea id="description" name="description"></textarea>
       </div>
 
       <div class="g-recaptcha" data-sitekey="6LeIoLImAAAAAMf0LPL1QoadU0SIjjV5Von4UBh4"></div>
@@ -113,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div id="response_msg"><?php echo $response; ?></div>
   </div>
   </form>
-
+  <script  src="validation.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
