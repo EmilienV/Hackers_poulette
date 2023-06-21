@@ -15,7 +15,7 @@
 <?php
 
 
-$dbh = new PDO('mysql:host=localhost;dbname=hackers_poulette', "Dbconnect", "password");
+$dbh = new PDO('mysql:host=localhost;dbname=id20944250_hackerspoulette', "id20944250_dbconnect", "E6adn019_");
 $response = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -56,8 +56,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt->bindParam(':file', $fileContent, PDO::PARAM_LOB);
 
       if ($stmt->execute()) {
-        $response = "Your message has been sent, we'll reach out to you as soon as possible.";
+        $to = $sanitizedEmail;
+        $subject = "Hackers poulette contact";
+        $message = "Thank you for contacting us {$sanitizedFirstname}, we'll reach out to you as soon as possible!";
+        $header = "From: Hakkers Poulette <noreply@hakkerspoulette.com>";
 
+        $retval = mail ($to,$subject,$message,$header);
+         
+        if( $retval === true ) {
+            $response = "Message sent successfully, thank you for contacting us.";
+        }else {
+            $response = "Message could not be sent.";
+        }
       }
     } else {
       $response = "CAPTCHA verification failed. Please try again.";
