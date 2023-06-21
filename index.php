@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $to = $sanitizedEmail;
         $subject = "Hackers poulette contact";
         $message = "Thank you for contacting us {$sanitizedFirstname}, we'll reach out to you as soon as possible!";
-        $header = "From: Hakkers Poulette <noreply@hakkerspoulette.com>";
+        $header = "From: Hackers Poulette <noreply@hackerspoulette.com>";
 
         $retval = mail ($to,$subject,$message,$header);
          
