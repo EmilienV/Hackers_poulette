@@ -4,6 +4,8 @@ body {
   color: white;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   height: 100%;
   width: 100%;
@@ -14,13 +16,14 @@ body {
     flex-direction: column;
 
     margin-top: 20px;
-    width: 50%;
+    width: fit-content;
     text-align: start;
     #submit_btn {
       background-color: #ebf5ee;
     }
     #description {
-      width: 202px;
+      width: 100%; /* Set the width to 100% */
+      max-width: 202px; /* Set the maximum width */
     }
     #submit_btn {
       width: 150px;
@@ -28,11 +31,14 @@ body {
       margin-top: 10px;
     }
     label {
+      display: inline-block; /* Ensure labels have the same size */
+      width: 100px; /* Adjust the width as needed */
       margin-right: 5px;
     }
     input {
-      width: fit-content;
       margin-bottom: 5px;
+      width: 100%; /* Set the width to 100% */
+      max-width: 202px; /* Set the maximum width */
     }
     .description_area {
       margin-bottom: 15px;
