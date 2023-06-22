@@ -1,3 +1,5 @@
+<!--    id20944250_hackerspoulette id20944250_dbconnect E6adn019_ -->
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -12,7 +14,7 @@
 </head>
 
 <?php
-$dbh = new PDO('mysql:host=localhost;dbname=id20944250_hackerspoulette', "id20944250_dbconnect", "E6adn019_");
+$dbh = new PDO('mysql:host=localhost;dbname=hackers_poulette', "Dbconnect", "password");
 $response = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -30,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $maxFileSize = 2 * 1024 * 1024; // 2MB
 
     if (in_array(strtolower($fileExtension), $allowedExtensions) && $uploadedFile['size'] <= $maxFileSize) {
-      $fileContent = file_get_contents($uploadedFile['tmp_name']);
+      $fileContent = file_get_contents($_FILES['file']['tmp_name']);
     }
   }
 
@@ -58,12 +60,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = "Thank you for contacting us {$sanitizedFirstname}, we'll reach out to you as soon as possible!";
         $header = "From: Hackers Poulette <noreply@hackerspoulette.com>";
 
-        $retval = mail ($to,$subject,$message,$header);
-         
-        if( $retval === true ) {
-            $response = "Message sent successfully, thank you for contacting us.";
-        }else {
-            $response = "Message could not be sent.";
+        $retval = mail($to, $subject, $message, $header);
+
+        if ($retval === true) {
+          $response = "Message sent successfully, thank you for contacting us.";
+        } else {
+          $response = "Message could not be sent.";
         }
       }
     } else {
@@ -78,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <h1 id="title">Contact me</h1>
   <div class="form_container">
-    <form action="" method="post" id="myForm">
+    <form action="" method="post" id="myForm" enctype="multipart/form-data">
       <div class="name_area">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name">
@@ -110,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div id="response_msg"><?php echo $response; ?></div>
   </div>
   </form>
-  <script  src="validation.js"></script>
+  <script src="validation.js"></script>
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </body>
 
