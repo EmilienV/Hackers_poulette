@@ -1,47 +1,61 @@
 body {
   font-family: "Oswald", sans-serif;
-  background-color: #282b28;
-  color: white;
+  background-color: #adadc9;
+  color: #322d31;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   height: 100%;
   width: 100%;
   text-align: center;
-
   .form_container {
+    align-items: center;
     display: flex;
     flex-direction: column;
-
+    border: solid 1px white;
     margin-top: 20px;
     width: fit-content;
     text-align: start;
-    #submit_btn {
-      background-color: #ebf5ee;
-    }
-    #description {
-      width: 100%; /* Set the width to 100% */
-      max-width: 202px; /* Set the maximum width */
-    }
-    #submit_btn {
-      width: 150px;
-      height: 30px;
-      margin-top: 10px;
-    }
-    label {
-      display: inline-block; /* Ensure labels have the same size */
-      width: 100px; /* Adjust the width as needed */
-      margin-right: 5px;
-    }
-    input {
-      margin-bottom: 5px;
-      width: 100%; /* Set the width to 100% */
-      max-width: 202px; /* Set the maximum width */
-    }
-    .description_area {
-      margin-bottom: 15px;
+    form {
+      align-items: center;
+
+      #description {
+        width: 100%;
+        max-width: 202px;
+      }
+      label {
+        display: inline-block;
+        width: 100px;
+        margin-right: 5px;
+      }
+      .name_area,
+      .firstname_area,
+      .email_area,
+      .file_area,
+      .description_area {
+        display: flex;
+        flex-direction: column;
+        margin-left: 25px;
+      }
+      .description_area {
+        margin-bottom: 30px;
+      }
+      input {
+        margin-bottom: 5px;
+        width: 100%;
+        max-width: 202px;
+      }
+      .form_footer {
+        display: flex;
+        justify-content: center;
+        #submit_btn {
+          width: 150px;
+          height: 30px;
+          margin-top: 10px;
+          background-color: #ebf5ee;
+        }
+      }
     }
   }
 }

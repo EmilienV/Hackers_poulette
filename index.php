@@ -1,5 +1,3 @@
-<!--    id20944250_hackerspoulette id20944250_dbconnect E6adn019_ -->
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -14,7 +12,7 @@
 </head>
 
 <?php
-$dbh = new PDO('mysql:host=localhost;dbname=hackers_poulette', "Dbconnect", "password");
+$dbh = new PDO('mysql:host=localhost;dbname=id20944250_hackerspoulette', "id20944250_dbconnect", "E6adn019_");
 $response = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -35,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $fileContent = file_get_contents($_FILES['file']['tmp_name']);
     }
   }
-
 
   // reCAPTCHA validation
   if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
@@ -59,7 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $subject = "Hackers poulette contact";
         $message = "Thank you for contacting us {$sanitizedFirstname}, we'll reach out to you as soon as possible!";
         $header = "From: Hackers Poulette <noreply@hackerspoulette.com>";
-
         $retval = mail($to, $subject, $message, $header);
 
         if ($retval === true) {
@@ -67,6 +63,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
           $response = "Message could not be sent.";
         }
+        // $transport = new Swift_SmtpTransport('smtp-relay.sendinblue.com', 587);
+        // $transport->setUsername('emilienvolkaert@gmail.com');
+        // $transport->setPassword('wCaYRJ2ghV0TOI9m');
+        // $mailer = new Swift_Mailer($transport);
+
+        // $message = new Swift_Message('Confirmation Email');
+        // $message->setFrom('noreply@hackerspoulette.com');
+        // $message->setTo($email);
+        // $message->setBody("Thank you for contacting us! We have received your message. We'll contact you as soon as possible.");
+
+        // $result = $mailer->send($message);
       }
     } else {
       $response = "CAPTCHA verification failed. Please try again.";
@@ -78,8 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <body>
-  <h1 id="title">Contact me</h1>
+
   <div class="form_container">
+    <h1 id="title">Contact us</h1>
     <form action="" method="post" id="myForm" enctype="multipart/form-data">
       <div class="name_area">
         <label for="name">Name:</label>
@@ -107,9 +115,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div class="g-recaptcha" data-sitekey="6LeIoLImAAAAAMf0LPL1QoadU0SIjjV5Von4UBh4"></div>
-
-      <button type="submit" id="submit_btn">Submit</button>
-      <div id="response_msg"><?php echo $response; ?></div>
+      <div class="form_footer">
+        <button type="submit" id="submit_btn">Submit</button>
+        <div id="response_msg"><?php echo $response; ?></div>
+      </div>
   </div>
   </form>
   <script src="validation.js"></script>
