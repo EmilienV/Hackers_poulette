@@ -1,3 +1,6 @@
+/// In this project there are a few keys or password that you have to input yourself to be able to use the code. On line 18,44 and 110.
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -12,7 +15,7 @@
 </head>
 
 <?php
-$dbh = new PDO('mysql:host=localhost;dbname=id20944250_hackerspoulette', "id20944250_dbconnect", "E6adn019_");
+$dbh = new PDO('mysql:host=localhost;dbname=id20944250_hackerspoulette', "id20944250_dbconnect", "password");
 $response = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -38,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   // reCAPTCHA validation
   if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
 
-    $secretAPIkey = '6LeIoLImAAAAACESnT4uRUJzpKAHJ_Z831h-UKX0';
+    $secretAPIkey = 'SecretAPIKey';
     $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secretAPIkey . '&response=' . $_POST['g-recaptcha-response']);
     $responseAPI = json_decode($verifyResponse);
 
@@ -104,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <textarea id="description" name="description"></textarea>
       </div>
 
-      <div class="g-recaptcha" data-sitekey="6LeIoLImAAAAAMf0LPL1QoadU0SIjjV5Von4UBh4"></div>
+      <div class="g-recaptcha" data-sitekey="SecretKey"></div>
 
       <button type="submit" id="submit_btn">Submit</button>
       <div id="response_msg"><?php echo $response; ?></div>
