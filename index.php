@@ -1,6 +1,3 @@
-/// In this project there are a few keys or password that you have to input yourself to be able to use the code. On line 18,44 and 110.
-
-
 <!DOCTYPE html>
 <html lang="fr">
 
